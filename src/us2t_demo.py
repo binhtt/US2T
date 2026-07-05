@@ -129,4 +129,40 @@ def run_demo():
         
         print(f"\n📚 Found {len(stories)} stories in {project}")
         
-       
+        # Generate test cases for all stories
+        all_results = []
+        for i, story in enumerate(stories, 1):
+            print(f"\n📝 Processing story {i}/{len(stories)}: {story['id']}")
+            story_text = story['user_story']
+            
+            try:
+                result = generator.generate(
+                    story_text,
+                    save_results=True,
+                    output_dir=f"outputs/benchmark/{project}/{story['id']}/"
+                )
+                
+                # Add story metadata
+                result['story_id'] = story['id']
+                result['acceptance_criteria_count'] = len(story['acceptance_criteria'])
+                all_results.append(result)
+                
+                print(f"  ✅ Coverage: {result['coverage']:.1f}%")
+            except Exception as e:
+                print(f"  ❌ Error: {e}")
+        
+        # Save benchmark results
+        summary_path = f"outputs/benchmark/{project}/summary.json"
+        save_benchmark_results(all_results, summary_path)
+        
+        # Print summary
+        print_header("📊 BENCHMARK SUMMARY")
+        total_coverage = sum(r['coverage'] for r in all_results) / len(all_results) if all_results else 0
+        print(f"Project: {project}")
+        print(f"Stories processed: {len(all_results)}/{len(stories)}")
+        print(f"Average coverage: {total_coverage:.1f}%")
+        print(f"Results saved to: outputs/benchmark/{project}/")
+
+
+if __name__ == "__main__":
+    run_demo()
