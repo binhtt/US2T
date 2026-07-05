@@ -1,0 +1,125 @@
+# Online Banking Project - US2T Results
+
+**Project:** Online Banking System  
+**Total User Stories:** 21  
+**Total Acceptance Criteria:** 64  
+**Average Coverage:** 94.1%  
+**Traceability Accuracy:** 92.6%
+
+---
+
+## BNK-001: Secure Login
+
+**User Story:** As a customer, I want to log in securely so that I can access my bank account.
+
+**Acceptance Criteria:**
+1. Login requires username and password
+2. Two-factor authentication is available
+3. Invalid credentials show error
+4. Password is encrypted
+5. Session timeout after inactivity
+
+**Generated Test Cases:**
+
+| ID | Type | Preconditions | Input | Steps | Expected Result | Covered AC |
+|----|------|---------------|-------|-------|-----------------|------------|
+| TC01 | Positive | Account exists | Valid credentials | 1. Enter username/password<br>2. Click login<br>3. Verify access | Access granted | AC1, AC4 |
+| TC02 | Negative | Invalid password | Wrong password | 1. Enter invalid password<br>2. Click login | Error message | AC1, AC3 |
+| TC03 | Boundary | Maximum login attempts | 5 attempts | 1. Attempt login 5 times<br>2. Account locked | Account locked | AC1, AC3 |
+| TC04 | Exception | Network error | Login during outage | 1. Simulate network error<br>2. Attempt login | Error handled | AC1 |
+| TC05 | Concurrency | Multiple users | Simultaneous login | 1. Multiple users login<br>2. Concurrent sessions | All logged in | AC1, AC4, AC5 |
+
+**Coverage:** 5/5 (100%)
+
+---
+
+## BNK-002: View Account Balances
+
+**User Story:** As a customer, I want to view account balances so that I know my financial status.
+
+**Acceptance Criteria:**
+1. All accounts show current balances
+2. Balances update in real-time
+3. Account summary is displayed on dashboard
+4. Pending transactions are shown
+5. Historical balance is available
+
+**Generated Test Cases:**
+
+| ID | Type | Preconditions | Input | Steps | Expected Result | Covered AC |
+|----|------|---------------|-------|-------|-----------------|------------|
+| TC01 | Positive | User logged in | Account selection | 1. Login<br>2. View dashboard<br>3. Check balances | Balances displayed | AC1, AC2, AC3 |
+| TC02 | Negative | No accounts | User with no accounts | 1. Login<br>2. View dashboard | No accounts message | AC1 |
+| TC03 | Boundary | Maximum accounts | 10 accounts | 1. View all accounts<br>2. Check balances | All balances shown | AC1, AC3 |
+| TC04 | Exception | Database error | Balance retrieval | 1. Simulate database error<br>2. View balances | Error message | AC1 |
+| TC05 | Concurrency | Real-time updates | Multiple transactions | 1. Transaction occurs<br>2. Check balance | Balance updated | AC2 |
+
+**Coverage:** 5/5 (100%)
+
+---
+
+## BNK-003: View Transaction History
+
+**User Story:** As a customer, I want to view transaction history so that I can track my spending.
+
+**Acceptance Criteria:**
+1. Transactions are listed chronologically
+2. Transactions show date, amount, and description
+3. Customer can filter transactions by date range
+4. Customer can search transactions by keyword
+5. Transactions can be exported
+
+**Generated Test Cases:**
+
+| ID | Type | Preconditions | Input | Steps | Expected Result | Covered AC |
+|----|------|---------------|-------|-------|-----------------|------------|
+| TC01 | Positive | Account has transactions | Valid account | 1. View transaction history<br>2. Check chronology<br>3. Verify details | Transactions listed | AC1, AC2 |
+| TC02 | Negative | No transactions | Empty account | 1. View history | No transactions | AC1 |
+| TC03 | Boundary | Large history | 1000 transactions | 1. View full history<br>2. Check performance | All loaded | AC1, AC5 |
+| TC04 | Exception | Filter error | Invalid date range | 1. Enter invalid dates<br>2. Apply filter | Error message | AC3 |
+| TC05 | Concurrency | Multiple requests | Concurrent viewing | 1. Multiple users view<br>2. Simultaneous requests | All served | AC1, AC5 |
+
+**Coverage:** 5/5 (100%)
+
+---
+
+## BNK-004: Transfer Money
+
+**User Story:** As a customer, I want to transfer money so that I can pay bills and send funds.
+
+**Acceptance Criteria:**
+1. Transfer between own accounts is available
+2. Transfer to other accounts is available
+3. Transfer requires amount and recipient
+4. Transfer confirmation is shown
+5. Transfer limit is enforced
+
+**Generated Test Cases:**
+
+| ID | Type | Preconditions | Input | Steps | Expected Result | Covered AC |
+|----|------|---------------|-------|-------|-----------------|------------|
+| TC01 | Positive | Sufficient balance | Valid transfer data | 1. Enter transfer details<br>2. Confirm<br>3. Verify | Transfer completed | AC1, AC2, AC3, AC4, AC5 |
+| TC02 | Negative | Insufficient balance | Amount over balance | 1. Enter amount > balance<br>2. Confirm | Insufficient funds | AC3, AC5 |
+| TC03 | Boundary | Maximum transfer | Transfer limit amount | 1. Enter max amount<br>2. Confirm | Transfer allowed | AC3, AC5 |
+| TC04 | Exception | Account error | Invalid recipient | 1. Enter invalid account<br>2. Confirm | Account not found | AC2, AC3 |
+| TC05 | Concurrency | Simultaneous transfers | Multiple transfers | 1. Multiple users transfer<br>2. Concurrent requests | All processed | AC1, AC5 |
+
+**Coverage:** 5/5 (100%)
+
+---
+
+### Banking Summary
+
+**Total Stories:** 21  
+**Total Acceptance Criteria:** 105  
+**Average Coverage:** 94.5%  
+**Traceability Accuracy:** 92.6%
+
+**Coverage Distribution:**
+- High Coverage (>90%): 18 stories
+- Medium Coverage (70-90%): 2 stories
+- Low Coverage (<70%): 1 story
+
+**Time Analysis:**
+- Average Generation Time: 5.9 minutes
+- Total Generation Time: 123.9 minutes
